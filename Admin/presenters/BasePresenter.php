@@ -22,7 +22,7 @@ class BasePresenter extends \AdminModule\BasePresenter {
 		
 	}
 	
-	public function actionDefault(){
+	public function actionDefault($idPage){
 
 	}
 	

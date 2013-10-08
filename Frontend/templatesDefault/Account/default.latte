@@ -1,0 +1,34 @@
+{block #content}
+	<h1>{$actualPage->getTitle()}</h1>
+	
+	{if !$user->getId()}
+	
+		{form loginForm}
+			<form role="form">
+				<div class="form-group">
+					{label email /}
+					{input email class => form-control}
+				</div>
+				<div class="form-group">
+					{label password /}
+					{input password class => form-control}
+				</div>
+					{input login class => 'btn btn-default'}
+			</form>
+		{/form}
+
+		<a n:href="register path => $actualPage->getPath(), abbr => $abbr">{_'Register'}</a>
+	
+	{else}
+		
+		{$user->getFirstname()} {$user->getLastname()}
+		
+		<a n:href="logout path => $actualPage->getPath(), abbr => $abbr">{_'Logout'}</a>
+		
+		<a n:href="viewOrders path => $actualPage->getPath(), abbr => $abbr">{_'Orders'}</a>
+		
+		<a n:href="settings path => $actualPage->getPath(), abbr => $abbr">{_'My account settings'}</a>
+		
+	{/if}
+	
+{/block}

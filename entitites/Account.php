@@ -12,32 +12,32 @@ use Doctrine\ORM\Mapping as orm;
  */
 class Account extends \AdminModule\Doctrine\Entity {
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $firstname;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $lastname;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $street;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $city;
 	
 	/**
-	 * @orm\Column(type="integer")
+	 * @orm\Column(type="integer", nullable=true)
 	 */
 	private $postcode;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $state;
 	
@@ -47,44 +47,58 @@ class Account extends \AdminModule\Doctrine\Entity {
 	private $email;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $phone;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceCompany;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceNo;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceVatNo;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceStreet;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceCity;
 	
 	/**
-	 * @orm\Column(type="integer")
+	 * @orm\Column(type="integer", nullable=true)
 	 */
 	private $invoicePostcode;
 	
 	/**
-	 * @orm\Column
+	 * @orm\Column(nullable=true)
 	 */
 	private $invoiceState;
+	
+	/**
+	 * @orm\Column
+	 */
+	private $password;
+	
+	/**
+     * @orm\OneToMany(targetEntity="\WebCMS\EshopModule\Doctrine\Order", mappedBy="account")
+     */
+	private $orders;
+	
+	public function __construct(){
+		$this->orders = new \Doctrine\Common\Collections\ArrayCollection;
+	}
 	
 	public function getFirstname() {
 		return $this->firstname;
@@ -204,5 +218,21 @@ class Account extends \AdminModule\Doctrine\Entity {
 
 	public function setInvoiceState($invoiceState) {
 		$this->invoiceState = $invoiceState;
+	}
+	
+	public function getPassword() {
+		return $this->password;
+	}
+
+	public function setPassword($password) {
+		$this->password = $password;
+	}
+	
+	public function getOrders() {
+		return $this->orders;
+	}
+
+	public function setOrders($orders) {
+		$this->orders = $orders;
 	}
 }

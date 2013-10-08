@@ -8,7 +8,6 @@ namespace AdminModule\AccountModule;
  */
 class SettingsPresenter extends BasePresenter {
 	
-	
 	protected function startup() {
 		parent::startup();
 	}
@@ -24,8 +23,8 @@ class SettingsPresenter extends BasePresenter {
 	public function createComponentSettingsForm(){
 		
 		$settings = array();
-		//$settings[] = $this->settings->get('Show map', 'accountModule', 'checkbox', array());
-		
+		$settings[] = $this->settings->get('Register email subject', 'accountModule', 'text', array());
+		$settings[] = $this->settings->get('Register email', 'accountModule', 'textarea', array());
 		
 		return $this->createSettingsForm($settings);
 	}
@@ -36,6 +35,4 @@ class SettingsPresenter extends BasePresenter {
 		$this->template->config = $this->settings->getSection('accountModule');
 		$this->template->idPage = $idPage;
 	}
-	
-	
 }
