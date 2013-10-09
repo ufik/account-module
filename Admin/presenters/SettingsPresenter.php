@@ -14,7 +14,7 @@ class SettingsPresenter extends BasePresenter {
 
 	protected function beforeRender() {
 		parent::beforeRender();
-		
+			
 	}
 	
 	public function actionDefault($idPage){
@@ -25,6 +25,9 @@ class SettingsPresenter extends BasePresenter {
 		$settings = array();
 		$settings[] = $this->settings->get('Register email subject', 'accountModule', 'text', array());
 		$settings[] = $this->settings->get('Register email', 'accountModule', 'textarea', array());
+		
+		$settings[] = $this->settings->get('New password subject', 'accountModule', 'text', array());
+		$settings[] = $this->settings->get('New password', 'accountModule', 'textarea', array());
 		
 		return $this->createSettingsForm($settings);
 	}

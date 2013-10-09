@@ -15,6 +15,8 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 	
 	private $user;
 	
+	private $account;
+	
 	protected function startup(){
 		parent::startup();
 
@@ -44,6 +46,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 	}
 	
 	public function actionDefault($id){
+		
 	}
 	
 	public function renderDefault($id){
@@ -76,7 +79,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 			);
 		
 		if(is_object($user)){
-			
+
 			$this->user = $user;
 			$this->saveAccountState();
 			
@@ -278,6 +281,8 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 				$this->translation['My account settings'],
 				$this->actualPage->getPath() . \Nette\Utils\Strings::webalize($this->translation['My account settings'])
 			);
+		
+		$this->account = $this->repository->find($this->user->getId());
 	}
 	
 	public function renderSettings($id){
@@ -285,4 +290,94 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		$this->template->id = $id;
 	}
 	
+	public function createComponentAccountForm($name){
+		$form = $this->createForm('accountForm-submit', 'settings');
+				
+		$form->addText('firstname', 'Firstname');
+		$form->addText('lastname', 'Lastname');
+		$form->addText('email', 'Email')->setDisabled();
+		$form->addText('phone', 'Phone');
+		$form->addText('street', 'Street');
+		$form->addText('city', 'City');
+		$form->addText('postcode', 'Postcode');
+		
+		$form->addText('invoiceCompany', 'Company name');
+		$form->addText('invoiceNo', 'No.');
+		$form->addText('invoiceVatNo', 'Vat No.');
+		$form->addText('invoiceStreet', 'Street');
+		$form->addText('invoiceCity', 'City');
+		$form->addText('invoicePostcode', 'Postcode');
+		
+		$form->addPassword('password', 'Password');
+		
+		$form->addPassword('confirmPassword', 'Potvrzení hesla:', 30)
+            ->addRule(\Nette\Forms\Form::EQUAL, 'Both passwords have to be equal.', $form['password']);
+		
+		$form->addCheckbox('generatePassword', 'Generate new password?');
+		
+		$form->addSubmit('send', 'Save');
+		$form->onSuccess[] = callback($this, 'accountFormSubmitted');
+		
+		if($this->account){
+			$form->setDefaults($this->account->toArray());
+		}
+		
+		return $form;
+	}
+	
+	public function accountFormSubmitted($form){
+		
+		$values = $form->getValues();
+		
+		$this->account->setFirstname($values->firstname);
+		$this->account->setLastname($values->lastname);
+		//$this->account->setEmail($values->email);
+		$this->account->setPhone($values->phone);
+		$this->account->setStreet($values->street);
+		$this->account->setCity($values->city);
+		$this->account->setPostcode($values->postcode);
+		
+		$this->account->setInvoiceCompany($values->invoiceCompany);
+		$this->account->setInvoiceNo($values->invoiceNo);
+		$this->account->setInvoiceVatNo($values->invoiceVatNo);
+		$this->account->setInvoiceStreet($values->invoiceStreet);
+		$this->account->setInvoiceCity($values->invoiceCity);
+		$this->account->setInvoicePostcode($values->invoicePostcode);
+		
+		if(!empty($values->password)){
+			$this->flashMessage($this->translation['Password has been changed.'], 'success');
+			
+			$hash = $this->getContext()->authenticator->calculateHash($values->password);
+			$this->account->setPassword($hash);
+		}
+		
+		$this->em->flush();
+		
+		$this->user = $this->account;
+		$this->saveAccountState();
+		
+		$this->flashMessage($this->translation['Account data has been saved.'], 'success');
+		$this->selfRedirect();
+	}
+	
+	private function sendNewPasswordEmail($email, $password){
+		
+		$text = \WebCMS\SystemHelper::replaceStatic($this->settings->get('New password', 'accountModule', 'textarea')->getValue(),
+				array(
+					'[LOGIN]',
+					'[PASSWORD]'
+				),
+				array(
+					$email,
+					$password
+				)
+				);
+		
+		$mail = new \Nette\Mail\Message;
+		$mail->addTo($email);
+		$mail->setFrom($this->settings->get('Info email', \WebCMS\Settings::SECTION_BASIC)->getValue());
+		$mail->setHtmlBody($text);
+		$mail->setSubject(\WebCMS\SystemHelper::replaceStatic($this->settings->get('New password subject', 'accountModule', 'text')->getValue()));
+		$mail->send();
+	}
 }

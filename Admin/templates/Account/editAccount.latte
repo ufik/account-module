@@ -1,0 +1,81 @@
+{block #content}
+
+	{include ../tabs.latte active => 'account'}
+
+	<h1>{_'Edit account'}</h1>
+
+	{form accountForm}
+		<div class="row">
+			<div class="col-md-6">
+				<h2>{_'Delivery address'}</h2>
+				
+				<div class="form-group">
+					{label firstname /}
+					{input firstname class => form-control}
+				</div>
+				<div class="form-group">
+					{label lastname /}
+					{input lastname class => form-control}
+				</div>
+				<div class="form-group">
+					{label email /}
+					{input email class => form-control}
+				</div>
+				<div class="form-group">
+					{label phone /}
+					{input phone class => form-control}
+				</div>
+				<div class="form-group">
+					{label street /}
+					{input street class => form-control}
+				</div>
+				<div class="form-group">
+					{label city /}
+					{input city class => form-control}
+				</div>
+				<div class="form-group">
+					{label postcode /}
+					{input postcode class => form-control}
+				</div>
+				
+			</div>
+			<div class="col-md-6">
+				<h2>{_'Invoice address'}</h2>
+				
+				<div class="form-group">
+					{label invoiceCompany /}
+					{input invoiceCompany class => form-control}
+				</div>
+				<div class="form-group">
+					{label invoiceNo /}
+					{input invoiceNo class => form-control}
+				</div>
+				<div class="form-group">
+					{label invoiceVatNo /}
+					{input invoiceVatNo class => form-control}
+				</div>
+				<div class="form-group">
+					{label invoiceStreet /}
+					{input invoiceStreet class => form-control}
+				</div>
+				<div class="form-group">
+					{label invoiceCity /}
+					{input invoiceCity class => form-control}
+				</div>
+				<div class="form-group">
+					{label invoicePostcode /}
+					{input invoicePostcode class => form-control}
+				</div>
+				<div class="form-group">
+					{label generatePassword /}
+					{input generatePassword class => form-control}
+				</div>
+				<div class="form-group">
+					{input send class => 'btn btn-success'}
+				</div>
+				
+			</div>
+		</div>
+	{/form}
+	
+{/block}
