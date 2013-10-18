@@ -34,15 +34,15 @@ class AccountPresenter extends BasePresenter {
 				
 		$grid = $this->createGrid($this, $name, '\WebCMS\AccountModule\Doctrine\Account');
 						
-		$grid->addColumn('firstname', 'Firstname')->setSortable()->setFilter();
-		$grid->addColumn('lastname', 'Lastname')->setSortable()->setFilter();
-		$grid->addColumn('email', 'Email')->setSortable()->setFilter();
-		$grid->addColumn('street', 'Street')->setSortable()->setFilter();
-		$grid->addColumn('city', 'City')->setSortable()->setFilter();
-		$grid->addColumn('postcode', 'Postcode')->setSortable()->setFilterNumber();
+		$grid->addColumnText('firstname', 'Firstname')->setSortable()->setFilterText();
+		$grid->addColumnText('lastname', 'Lastname')->setSortable()->setFilterText();
+		$grid->addColumnText('email', 'Email')->setSortable()->setFilterText();
+		$grid->addColumnText('street', 'Street')->setSortable()->setFilterText();
+		$grid->addColumnText('city', 'City')->setSortable()->setFilterText();
+		$grid->addColumnText('postcode', 'Postcode')->setSortable()->setFilterText();
 						
-		$grid->addAction("editAccount", 'Edit', \Grido\Components\Actions\Action::TYPE_HREF, 'editAccount', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => 'btn btn-primary ajax'));
-		$grid->addAction("deleteAccount", 'Delete', \Grido\Components\Actions\Action::TYPE_HREF, 'deleteAccount', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => 'btn btn-primary btn-danger'));
+		$grid->addActionHref("editAccount", 'Edit', 'editAccount', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => 'btn btn-primary ajax'));
+		$grid->addActionHref("deleteAccount", 'Delete', 'deleteAccount', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => 'btn btn-primary btn-danger'));
 		
 		return $grid;
 	}
