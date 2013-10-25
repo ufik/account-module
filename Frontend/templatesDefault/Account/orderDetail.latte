@@ -1,0 +1,30 @@
+{block #content}
+	<h1>{$actualPage->getTitle()}</h1>
+	
+	{_'Order state'}: {$order->getStatus()->getTitle()}
+	
+	<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>{_'Name'}</th>
+					<th>{_'Price'}</th>
+					<th>{_'Quantity'}</th>
+					<th>{_'Price total'}</th>
+				</tr>
+			</thead>
+			{foreach $order->getItems() as $item}
+				<tr>
+					<td>{$item->getName()}</td>
+					<td>{$item->getPrice()|price}</td>
+					<td>{$item->getQuantity()}</td>
+					<td>{$item->getPriceTotal()|price}</td>
+				</tr>
+			{/foreach}
+			<tfooter>
+				<th colspan="2">{_'Totals'}</th>
+				<th>{$order->getQuantityTotal()}</th>
+				<th>{$order->getPriceTotal()|price}</th>
+			</tfooter>
+		</table>
+	
+{/block}

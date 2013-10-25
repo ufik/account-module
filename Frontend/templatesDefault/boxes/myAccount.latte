@@ -1,0 +1,6 @@
+{if $user->getId()}
+	<a class="account" href="{$link}">{_'Můj účet'}</a>
+	<a class="account" href="{$linkLogout}">{_'Odhlásit se'}</a>
+{else}
+	<a class="account" href="{$link}">{_'Přihlásit se'}</a>
+{/if}

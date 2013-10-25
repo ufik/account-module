@@ -1,0 +1,29 @@
+{block #content}
+	<h1>{$actualPage->getTitle()}</h1>
+	
+	{$user->getFirstname()} {$user->getLastname()}
+	
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>{_'Order No.'}</th>
+				<th>{_'Items'}</th>
+				<th>{_'Total price'}</th>
+				<th>{_'Order state'}</th>
+				<th>{_'Detail'}</th>
+			</tr>
+		</thead>
+		{foreach $user->getOrders() as $order}
+			<tr>
+				<td>{$order->getId()}</td>
+				<td>{$order->getQuantityTotal()}</td>
+				<td>{$order->getPriceTotal()|price}</td>
+				<td>{$order->getStatus()->getTitle()}</td>
+				<td>
+					<a n:href="orderDetail orderId => $order->getId(), path => $actualPage->getPath(), abbr => $abbr">{_'Detail'}</a>
+				</td>
+			</tr>
+		{/foreach}
+	</table>
+	
+{/block}
