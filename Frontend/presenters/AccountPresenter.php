@@ -83,11 +83,11 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 			$this->user = $user;
 			$this->saveAccountState();
 			
-			$this->flashMessageTranslated('Logging in was successful.', 'success');
+			$this->flashMessage('Logging in was successful.', 'success');
 			$this->selfRedirect();
 		}else{
 			
-			$this->flashMessageTranslated('Bad login data given.', 'danger');
+			$this->flashMessage('Bad login data given.', 'danger');
 			$this->selfRedirect();
 		}
 	}
@@ -115,7 +115,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		$this->user = new \WebCMS\AccountModule\Doctrine\Account;
 		$this->saveAccountState();
 		
-		$this->flashMessageTranslated('User has been logged out.', 'success');
+		$this->flashMessage('User has been logged out.', 'success');
 		$this->redirect('default', array(
 				'path' => $this->actualPage->getPath(),
 				'abbr' => $this->abbr
@@ -191,14 +191,14 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		if($registered){
 			$this->sendRegisterEmail($values->email, $values->password);
 			
-			$this->flashMessageTranslated('User has been registered.', 'success');
+			$this->flashMessage('User has been registered.', 'success');
 			$this->redirect('default', array(
 				'path' => $this->actualPage->getPath(),
 				'abbr' => $this->abbr
 			));
 		}
 		else{
-			$this->flashMessageTranslated('User with this email already exists.', 'danger');
+			$this->flashMessage('User with this email already exists.', 'danger');
 			$this->selfRedirect();
 		}
 	}
@@ -345,7 +345,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		$this->account->setInvoicePostcode($values->invoicePostcode);
 		
 		if(!empty($values->password)){
-			$this->flashMessage($this->translation['Password has been changed.'], 'success');
+			$this->flashMessage('Password has been changed.', 'success');
 			
 			$hash = $this->getContext()->authenticator->calculateHash($values->password);
 			$this->account->setPassword($hash);
@@ -356,7 +356,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		$this->user = $this->account;
 		$this->saveAccountState();
 		
-		$this->flashMessage($this->translation['Account data has been saved.'], 'success');
+		$this->flashMessage('Account data has been saved.', 'success');
 		$this->selfRedirect();
 	}
 	

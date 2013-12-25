@@ -52,7 +52,7 @@ class AccountPresenter extends BasePresenter {
 		$this->em->remove($order);
 		$this->em->flush();
 		
-		$this->flashMessage($this->translation['Account has been deleted.'], 'success');
+		$this->flashMessage('Account has been deleted.', 'success');
 		if(!$this->isAjax())
 			$this->redirect('Account:default', array(
 				'idPage' => $idPage
@@ -127,12 +127,12 @@ class AccountPresenter extends BasePresenter {
 			$this->account->setPassword($hash);
 			
 			$this->sendNewPasswordEmail($this->account->getEmail(), $password);
-			$this->flashMessage($this->translation['New password has been generated. Info email has been sent.'], 'success');
+			$this->flashMessage('New password has been generated. Info email has been sent.', 'success');
 		}
 		
 		$this->em->flush();
 		
-		$this->flashMessage($this->translation['Account has been saved.'], 'success');
+		$this->flashMessage('Account has been saved.', 'success');
 		$this->redirect('Account:editAccount', array(
 				'idPage' => $this->actualPage->getId(),
 				'id' => $this->getParam('id')
