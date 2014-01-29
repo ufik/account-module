@@ -92,9 +92,6 @@ use Doctrine\ORM\Mapping as orm;
 	 */
 	private $password;
 
-	/**
-	 * @orm\OneToMany(targetEntity="\WebCMS\EshopModule\Doctrine\Order", mappedBy="account")
-	 */
 	private $orders;
 
 	public function __construct() {
