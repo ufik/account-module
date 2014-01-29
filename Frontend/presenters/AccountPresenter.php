@@ -245,6 +245,13 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		
 		$user = $this->repository->find($this->user->getId());
 		
+		// load user orders
+		$orders = $this->em->getRepository('WebCMS\EshopModule\Doctrine\Orders')->findBy(array(
+			'user' => $user->getId()	
+		));
+		
+		$user->setOrders($orders);
+		
 		$this->template->user = $user;
 		$this->template->id = $id;
 	}
