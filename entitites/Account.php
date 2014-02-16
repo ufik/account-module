@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as orm;
      * @orm\Table(name="accountModule")
      * @author Tomáš Voslař <tomas.voslar at webcook.cz>
      */
-    class Account extends \AdminModule\Doctrine\Entity {
+    class Account extends \WebCMS\Entity\Entity {
 
 	/**
 	 * @orm\Column(nullable=true)
