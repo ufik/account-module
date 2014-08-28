@@ -246,7 +246,7 @@ class AccountPresenter extends \FrontendModule\BasePresenter{
 		$user = $this->repository->find($this->user->getId());
 		
 		// load user orders
-		$orders = $this->em->getRepository('WebCMS\EshopModule\Doctrine\Orders')->findBy(array(
+		$orders = $this->em->getRepository('WebCMS\EshopModule\Doctrine\Order')->findBy(array(
 			'user' => $user->getId()	
 		));
 		
